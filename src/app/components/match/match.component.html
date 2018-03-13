@@ -1,0 +1,45 @@
+<div class="card">
+
+  <div class="card-header bg-transparent text-center">
+    <h6>{{ match.teamHome.fullName }} - {{ match.teamGuest.fullName }}</h6>
+  </div>
+
+  <div class="card-body">
+    <p class="card-text">{{ match.kickoff }}</p>
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col text-center">
+          <img src="{{ match.teamHome.logo }}" alt="{{ match.teamHome.shortName }}" height="50" width="50"/>
+        </div>
+        <div class="col">
+          <input *ngIf="!result" class="form-control text-center" type="number" value="{{ bet.goalsHome }}"/>
+          <h3 *ngIf="result" class="text-right">{{ bet.goalsHome }}</h3>
+        </div>
+        <div class="col-1 text-center"><h3>:</h3></div>
+        <div class="col">
+          <input *ngIf="!result" class="form-control text-center" type="number" value="{{ bet.goalsGuest }}"/>
+          <h3 *ngIf="result">{{ bet.goalsGuest }}</h3>
+        </div>
+        <div class="col text-center">
+          <img src="{{ match.teamGuest.logo }}" alt="{{ match.teamGuest.shortName }}" height="50" width="50"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="result" class="card-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          Ergebnis:
+        </div>
+        <div class="col text-center">
+          {{ result.goalsHome }} : {{ result.goalsGuest }}
+        </div>
+        <div class="col text-right">
+          <span>{{ points }} {{ points === 1 ? 'Punkt' : 'Punkte' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
