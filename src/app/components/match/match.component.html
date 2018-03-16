@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card match">
 
   <div class="card-header bg-transparent text-center">
     <h6>{{ match.teamHome.fullName }} - {{ match.teamGuest.fullName }}</h6>
@@ -12,18 +12,25 @@
           <img src="{{ match.teamHome.logo }}" alt="{{ match.teamHome.shortName }}" height="50" width="50"/>
         </div>
         <div class="col">
-          <input *ngIf="!result" class="form-control text-center" type="number" value="{{ bet.goalsHome }}"/>
-          <h3 *ngIf="result" class="text-right">{{ bet.goalsHome }}</h3>
+          <input *ngIf="!result; else betGoalsHome" class="form-control text-center goals float-right" type="number" value="{{ bet.goalsHome }}"/>
+          <ng-template #betGoalsHome><h3 class="text-right">{{ bet.goalsHome }}</h3></ng-template>
         </div>
         <div class="col-1 text-center"><h3>:</h3></div>
         <div class="col">
-          <input *ngIf="!result" class="form-control text-center" type="number" value="{{ bet.goalsGuest }}"/>
-          <h3 *ngIf="result">{{ bet.goalsGuest }}</h3>
+          <input *ngIf="!result; else betGoalsGuest" class="form-control text-center goals" type="number" value="{{ bet.goalsGuest }}"/>
+          <ng-template #betGoalsGuest><h3>{{ bet.goalsGuest }}</h3></ng-template>
         </div>
         <div class="col text-center">
           <img src="{{ match.teamGuest.logo }}" alt="{{ match.teamGuest.shortName }}" height="50" width="50"/>
         </div>
       </div>
+    </div>
+
+    <div *ngIf="!result" class="details text-center">
+      <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#detailsCollapse" aria-expanded="false" aria-controls="detailsCollapse">Details</button>
+    </div>
+    <div *ngIf="!result" class="container collapse" id="detailsCollapse">
+      <span>collapse</span>
     </div>
   </div>
 
