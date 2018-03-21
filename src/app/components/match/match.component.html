@@ -6,63 +6,65 @@
 
   <div class="card-body">
     <p class="card-text">{{ match.kickoff }}</p>
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col text-center">
-          <img src="{{ match.teamHome.logo }}" alt="{{ match.teamHome.shortName }}" height="50" width="50"/>
-        </div>
-        <div class="col">
-          <input *ngIf="!result; else betGoalsHome" class="form-control text-center goals float-right" type="number" value="{{ bet.goalsHome }}"/>
-          <ng-template #betGoalsHome><h3 class="text-right">{{ bet.goalsHome }}</h3></ng-template>
-        </div>
-        <div class="col-1 text-center"><h3>:</h3></div>
-        <div class="col">
-          <input *ngIf="!result; else betGoalsGuest" class="form-control text-center goals" type="number" value="{{ bet.goalsGuest }}"/>
-          <ng-template #betGoalsGuest><h3>{{ bet.goalsGuest }}</h3></ng-template>
-        </div>
-        <div class="col text-center">
-          <img src="{{ match.teamGuest.logo }}" alt="{{ match.teamGuest.shortName }}" height="50" width="50"/>
+    <form [formGroup]="betForm" (ngSubmit)="onSubmit(betForm)">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col text-center">
+            <img src="{{ match.teamHome.logo }}" alt="{{ match.teamHome.shortName }}" height="50" width="50"/>
+          </div>
+          <div class="col">
+            <input *ngIf="!result; else betGoalsHome" formControlName="betGoalsHome" class="form-control text-center goals float-right" type="number" value="{{ bet.goalsHome }}" min="0"/>
+            <ng-template #betGoalsHome><h3 class="text-right">{{ bet.goalsHome }}</h3></ng-template>
+          </div>
+          <div class="col-1 text-center"><h3>:</h3></div>
+          <div class="col">
+            <input *ngIf="!result; else betGoalsGuest" formControlName="betGoalsGuest" class="form-control text-center goals" type="number" value="{{ bet.goalsGuest }}" min="0"/>
+            <ng-template #betGoalsGuest><h3>{{ bet.goalsGuest }}</h3></ng-template>
+          </div>
+          <div class="col text-center">
+            <img src="{{ match.teamGuest.logo }}" alt="{{ match.teamGuest.shortName }}" height="50" width="50"/>
+          </div>
         </div>
       </div>
-    </div>
+    </form>
 
     <div *ngIf="!result" class="details text-center">
-      <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="collapse" data-target="#detailsCollapse" aria-expanded="false" aria-controls="detailsCollapse">Details</button>
+      <button type="button" class="btn btn-link btn-sm" data-toggle="collapse" data-target="#detailsCollapse" aria-expanded="false" aria-controls="detailsCollapse">Details</button>
     </div>
     <div *ngIf="!result" class="container collapse" id="detailsCollapse">
       <div class="row justify-content-center">
         <div class="col-3">
-          <span>4</span>
+          <span>{{ homeTeam.ranking }}</span>
         </div>
         <div class="col-3 text-center">
           <span>Tabellenplatz</span>
         </div>
         <div class="col-3 text-right">
-          <span>15</span>
+          <span>{{ guestTeam.ranking }}</span>
         </div>
       </div>
 
       <div class="row justify-content-center">
         <div class="col-3">
-          <span>23</span>
+          <span>{{ homeTeam.points }}</span>
         </div>
         <div class="col-3 text-center">
           <span>Punkte</span>
         </div>
         <div class="col-3 text-right">
-          <span>15</span>
+          <span>{{ guestTeam.points }}</span>
         </div>
       </div>
 
       <div class="row justify-content-center">
         <div class="col-3">
-          <span>+4</span>
+          <span>{{ homeTeam.goalDifference }}</span>
         </div>
         <div class="col-3 text-center">
           <span>Torverhältnis</span>
         </div>
         <div class="col-3 text-right">
-          <span>-6</span>
+          <span>{{ guestTeam.goalDifference }}</span>
         </div>
       </div>
     </div>
