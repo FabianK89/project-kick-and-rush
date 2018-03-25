@@ -11,6 +11,7 @@ import { TeamService } from './services/team.service';
 import { AppComponent } from './app.component';
 import { MatchesComponent } from './components/matches/matches.component';
 import { MatchComponent } from './components/match/match.component';
+import { BetService } from './services/bet.service';
 
 
 @NgModule({
@@ -25,7 +26,7 @@ import { MatchComponent } from './components/match/match.component';
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { dataEncapsulation: false })
   ],
-  providers: [MatchService, TeamService],
+  providers: [MatchService, TeamService, BetService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,30 +1,33 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { catchError, tap } from 'rxjs/operators';
+import { Score } from '../models/score';
 
-import { Match } from '../models/match';
-import { MatchDay } from '../models/matchday';
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 
 @Injectable()
-export class MatchService {
-  private matchesUrl = 'api/matches';
-  private matchDaysUrl = 'api/matchdays';
+export class BetService {
+  private betsUrl = 'api/bets';
 
   constructor(private http: HttpClient) { }
 
-  getMatchDays(): Observable<MatchDay[]> {
-    return this.http.get<MatchDay[]>(this.matchDaysUrl).pipe(
-      catchError(this.handleError('getMatchDays', []))
+  getBetForMatchID(matchID: number): Observable<Score> {
+    return this.http.get<Score>(`${this.betsUrl}/?matchID=${matchID}`).pipe(
+      tap(_ => console.log(`found bet for match with id "${matchID}"`)),
+      catchError(this.handleError<any>('getBetForMatchID', []))
     );
   }
 
-  getMatchesByMatchdayID(id: number): Observable<Match[]> {
-    return this.http.get<Match[]>(`${this.matchesUrl}/?matchdayID=${id}`).pipe(
-      tap(_ => console.log(`found matches for matchday with id "${id}"`)),
-      catchError(this.handleError('getMatches', []))
+  updateBet(bet: Score): Observable<any> {
+    console.log(bet);
+    return this.http.put(this.betsUrl, bet, httpOptions).pipe(
+      tap(_ => console.log(`updated bet id=${bet.id}`)),
+      catchError(this.handleError<any>('updateBet'))
     );
   }
 

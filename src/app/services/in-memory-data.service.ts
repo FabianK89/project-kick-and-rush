@@ -1,9 +1,77 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Match } from '../models/match';
 import { Team } from '../models/team';
+import { Score } from '../models/score';
+import { MatchDay } from '../models/matchday';
 
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
+    const bets: Score[] = [
+      {
+        id: 10001,
+        matchID: 1,
+        goalsHome: 0,
+        goalsGuest: 1
+      },
+      {
+        id: 10002,
+        matchID: 2,
+        goalsHome: -1,
+        goalsGuest: -1
+      },
+      {
+        id: 10003,
+        matchID: 3,
+        goalsHome: -1,
+        goalsGuest: -1
+      },
+      {
+        id: 10004,
+        matchID: 4,
+        goalsHome: -1,
+        goalsGuest: -1
+      },
+      {
+        id: 10005,
+        matchID: 5,
+        goalsHome: -1,
+        goalsGuest: -1
+      },
+      {
+        id: 10006,
+        matchID: 6,
+        goalsHome: -1,
+        goalsGuest: -1
+      },
+      {
+        id: 10007,
+        matchID: 7,
+        goalsHome: -1,
+        goalsGuest: -1
+      },
+      {
+        id: 10008,
+        matchID: 8,
+        goalsHome: -1,
+        goalsGuest: -1
+      },
+      {
+        id: 10009,
+        matchID: 9,
+        goalsHome: -1,
+        goalsGuest: -1
+      }
+    ];
+
+    const results: Score[] = [
+      {
+        id: 1001,
+        matchID: 1,
+        goalsHome: 0,
+        goalsGuest: 1
+      }
+    ];
+
     const teams: Team[] = [
       {
         id: 10,
@@ -172,132 +240,94 @@ export class InMemoryDataService implements InMemoryDbService {
     const matches: Match[] = [
       {
         id: 1,
+        matchdayID: 1010,
         teamHome: teams[0],
         teamGuest: teams[1],
-        kickoff: 'Freitag, 09.03.2018 20:30'/*,
-        result: {
-          goalsHome: 0,
-          goalsGuest: 1
-        },
-        bet: {
-          goalsHome: 0,
-          goalsGuest: 1
-        }*/
+        kickoff: 'Freitag, 09.03.2018 20:30',
+        result: results[0],
+        bet: bets[0]
       },
       {
         id: 2,
+        matchdayID: 1010,
         teamHome: teams[2],
         teamGuest: teams[3],
         kickoff: 'Samstag, 10.03.2018 15:30',
-        result: {
-          goalsHome: 6,
-          goalsGuest: 0
-        },
-        bet: {
-          goalsHome: 4,
-          goalsGuest: 0
-        }
+        bet: bets[1]
       },
       {
         id: 3,
+        matchdayID: 1010,
         teamHome: teams[4],
         teamGuest: teams[5],
         kickoff: 'Samstag, 10.03.2018 15:30',
-        result: {
-          goalsHome: 3,
-          goalsGuest: 0
-        },
-        bet: {
-          goalsHome: 2,
-          goalsGuest: 1
-        }
+        bet: bets[2]
       },
       {
         id: 4,
+        matchdayID: 1011,
         teamHome: teams[6],
         teamGuest: teams[7],
         kickoff: 'Samstag, 10.03.2018 15:30',
-        result: {
-          goalsHome: 0,
-          goalsGuest: 0
-        },
-        bet: {
-          goalsHome: 1,
-          goalsGuest: 2
-        }
+        bet: bets[3]
       },
       {
         id: 5,
+        matchdayID: 1011,
         teamHome: teams[8],
         teamGuest: teams[9],
         kickoff: 'Samstag, 10.03.2018 15:30',
-        result: {
-          goalsHome: 1,
-          goalsGuest: 3
-        },
-        bet: {
-          goalsHome: 1,
-          goalsGuest: 1
-        }
+        bet: bets[4]
       },
       {
         id: 6,
+        matchdayID: 1011,
         teamHome: teams[10],
         teamGuest: teams[11],
         kickoff: 'Samstag, 10.03.2018 18:30',
-        result: {
-          goalsHome: 2,
-          goalsGuest: 0
-        },
-        bet: {
-          goalsHome: 1,
-          goalsGuest: 0
-        }
+        bet: bets[5]
       },
       {
         id: 7,
+        matchdayID: 1012,
         teamHome: teams[12],
         teamGuest: teams[13],
         kickoff: 'Sonnstag, 11.03.2018 15:30',
-        result: {
-          goalsHome: 0,
-          goalsGuest: 0
-        },
-        bet: {
-          goalsHome: 1,
-          goalsGuest: 1
-        }
+        bet: bets[6]
       },
       {
         id: 8,
+        matchdayID: 1012,
         teamHome: teams[14],
         teamGuest: teams[15],
         kickoff: 'Sonnstag, 11.03.2018 18:00',
-        result: {
-          goalsHome: 3,
-          goalsGuest: 2
-        },
-        bet: {
-          goalsHome: 2,
-          goalsGuest: 1
-        }
+        bet: bets[7]
       },
       {
         id: 9,
+        matchdayID: 1012,
         teamHome: teams[16],
         teamGuest: teams[17],
         kickoff: 'Montag, 12.03.2018 20:30',
-        result: {
-          goalsHome: 3,
-          goalsGuest: 1
-        },
-        bet: {
-          goalsHome: 2,
-          goalsGuest: 1
-        }
+        bet: bets[8]
       }
     ];
 
-    return { matches };
+    const matchdays: MatchDay[] = [
+      {
+        id: 1010,
+        name: '1. Spieltag'
+      },
+      {
+        id: 1011,
+        name: '2. Spieltag'
+      },
+      {
+        id: 1012,
+        name: '3. Spieltag'
+      }
+    ];
+
+    return { matchdays, matches, bets, results, teams };
   }
 }

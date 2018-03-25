@@ -3,6 +3,7 @@ import { Match } from '../../models/match';
 import { Score } from '../../models/score';
 import { Team } from '../../models/team';
 import { FormGroup, FormControl } from '@angular/forms';
+import { BetService } from '../../services/bet.service';
 
 @Component({
   selector: 'app-match',
@@ -19,18 +20,18 @@ export class MatchComponent implements OnInit {
   result: Score;
   points: number;
 
-  constructor() { }
+  constructor(private betService: BetService) { }
 
   ngOnInit() {
     this.homeTeam = this.match.teamHome;
     this.guestTeam = this.match.teamGuest;
-    this.bet = this.match.bet === undefined ? { goalsHome: 0, goalsGuest: 0} : this.match.bet;
     this.result = this.match.result;
-    this.calculatePoints();
+
+    this.getBet();
 
     this.betForm = new FormGroup({
-      betGoalsHome: new FormControl(this.bet.goalsHome),
-      betGoalsGuest: new FormControl(this.bet.goalsGuest)
+      betGoalsHome: new FormControl(),
+      betGoalsGuest: new FormControl()
     });
 
     this.onChanges();
@@ -59,12 +60,31 @@ export class MatchComponent implements OnInit {
     }
   }
 
+  getBet(): void {
+    this.betService.getBetForMatchID(this.match.id).subscribe(bet => {
+      this.bet = bet[0];
+      this.betForm.patchValue({
+        betGoalsHome: this.bet.goalsHome,
+        betGoalsGuest: this.bet.goalsGuest
+      });
+
+      this.calculatePoints();
+    });
+  }
+
   onChanges(): void {
-    this.betForm.valueChanges.subscribe(val => { this.onSubmit(this.betForm); });
+    this.betForm.valueChanges.subscribe(val => this.onSubmit(this.betForm));
   }
 
   onSubmit(form: FormGroup): void {
-    console.log('Home: ', form.value.betGoalsHome);
-    console.log('Guest: ', form.value.betGoalsGuest);
+    const goalsHome = form.value.betGoalsHome;
+    const goalsGuest = form.value.betGoalsGuest;
+
+    if (goalsHome > -1 && goalsGuest > -1) {
+      this.bet.goalsHome = goalsHome;
+      this.bet.goalsGuest = goalsGuest;
+
+      this.betService.updateBet(this.bet).subscribe(() => console.log('updated'));
+    }
   }
 }

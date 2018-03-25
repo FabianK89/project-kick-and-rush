@@ -1,3 +1,8 @@
 <div class="container">
+  <form [formGroup]="matchdayForm" (ngSubmit)="onSubmit(matchdayForm)">
+    <select class="form-control" formControlName="matchdaySelect" [(ngModel)]="selectedMatchday">
+      <option *ngFor="let matchday of matchdays" [ngValue]="matchday">{{ matchday.name }}</option>
+    </select>
+  </form>
   <app-match *ngFor="let match of matches" [match]="match"></app-match>
 </div>

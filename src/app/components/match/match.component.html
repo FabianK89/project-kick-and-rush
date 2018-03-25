@@ -12,14 +12,14 @@
           <div class="col text-center">
             <img src="{{ match.teamHome.logo }}" alt="{{ match.teamHome.shortName }}" height="50" width="50"/>
           </div>
-          <div class="col">
-            <input *ngIf="!result; else betGoalsHome" formControlName="betGoalsHome" class="form-control text-center goals float-right" type="number" value="{{ bet.goalsHome }}" min="0"/>
+          <div *ngIf="bet" class="col">
+            <input *ngIf="!result; else betGoalsHome" formControlName="betGoalsHome" class="form-control text-center goals float-right" type="number" value="{{ bet.goalsHome === -1 ? '' : bet.goalsHome }}" min="0"/>
             <ng-template #betGoalsHome><h3 class="text-right">{{ bet.goalsHome }}</h3></ng-template>
           </div>
           <div class="col-1 text-center"><h3>:</h3></div>
-          <div class="col">
-            <input *ngIf="!result; else betGoalsGuest" formControlName="betGoalsGuest" class="form-control text-center goals" type="number" value="{{ bet.goalsGuest }}" min="0"/>
-            <ng-template #betGoalsGuest><h3>{{ bet.goalsGuest }}</h3></ng-template>
+          <div *ngIf="bet" class="col">
+            <input *ngIf="!result; else betGoalsGuest" formControlName="betGoalsGuest" class="form-control text-center goals" type="number" value="{{ bet.goalsGuest === -1 ? '' : bet.goalsGuest }}" min="0"/>
+            <ng-template #betGoalsGuest><h3 *ngIf="bet">{{ bet.goalsGuest }}</h3></ng-template>
           </div>
           <div class="col text-center">
             <img src="{{ match.teamGuest.logo }}" alt="{{ match.teamGuest.shortName }}" height="50" width="50"/>
