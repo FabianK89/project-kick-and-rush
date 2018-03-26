@@ -14,6 +14,7 @@ import { MatchComponent } from './components/match/match.component';
 import { BetService } from './services/bet.service';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { AppRoutingModule } from './/app-routing.module';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { AppRoutingModule } from './/app-routing.module';
     MatchesComponent,
     MatchComponent,
     NavigationComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
